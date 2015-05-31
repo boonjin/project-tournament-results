@@ -105,5 +105,12 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+    
+    DB = connect()
+    c = DB.cursor()
+    c.execute("SELECT player1.id, player1.name, player2.id, player2.name FROM playerStandings AS player1, playerStandings AS player2 WHERE player1.wins = player2.wins AND player1.id > player2.id")
+    rows = c.fetchall()
+		      
+    return rows
 
 

@@ -3,15 +3,13 @@
 -- Put your SQL 'create table' statements in this file; also 'create view'
 -- statements if you choose to use it.
 --
--- You can write comments in this file by starting them with two dashes, like
--- these lines here.
 
+-- Clear and create database
 DROP DATABASE IF EXISTS tournament;
-
 CREATE DATABASE tournament;
-
 \c tournament;
 
+-- Create table to store players ID (primary key) and name
 CREATE TABLE players (
 	id SERIAL,
 	name TEXT,
@@ -21,7 +19,6 @@ CREATE TABLE players (
 CREATE TABLE matches (
 	winner_id int NOT NULL,
 	loser_id int NOT NULL,	
-	PRIMARY KEY (winner_id, loser_id),
 	FOREIGN KEY (winner_id) REFERENCES players(id),
 	FOREIGN KEY (loser_id) REFERENCES players(id)
 );
@@ -56,3 +53,15 @@ CREATE VIEW playerStandings AS
     ON players.id = playerMatchesCount.id
     ORDER BY wins DESC
     ;
+ 
+CREATE VIEW playerStandingsWithRow AS 
+    SELECT ROW_NUMBER() OVER (ORDER BY wins DESC) AS row, id, name, wins, matches_played FROM playerStandings
+    ;
+
+    
+CREATE VIEW swissPairings AS
+    SELECT player1.id AS player1_id, player1.name AS player1_name, player2.id AS player2_id, player2.name AS player2_name
+    FROM playerStandingsWithRow AS player1 
+    JOIN playerStandingsWithRow AS player2     
+    ON player1.row = player2.row - 1 AND player1.row % 2 = 1
+    ; 
