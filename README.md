@@ -11,9 +11,9 @@ Date: 31st May 2015
 This project contains a Python module that uses PostgresSQL database to keep track and matches players in a tournament based on swiss pairings.
 
 The 3 main files are
-    * `tournament.sql` - contains the database schema and predefined views for the project
-    * `tournament.py` - python module for the project
-    * `tournament_test.py` - test suite to check the python module
+* `tournament.sql` - contains the database schema and predefined views for the project
+* `tournament.py` - python module for the project
+* `tournament_test.py` - test suite to check the python module
     
 ### Requirements
 * Vagrant and Virtual Box
