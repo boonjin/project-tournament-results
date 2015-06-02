@@ -16,10 +16,12 @@ CREATE TABLE players (
 
 -- Create table to store matches played. first column - winner_id, second clumn - loser_id
 CREATE TABLE matches (
+    match_id SERIAL,
 	winner_id int NOT NULL,
 	loser_id int NOT NULL,	
 	FOREIGN KEY (winner_id) REFERENCES players(id),
-	FOREIGN KEY (loser_id) REFERENCES players(id)
+	FOREIGN KEY (loser_id) REFERENCES players(id),
+	PRIMARY KEY (match_id)
 );
 
 -- Returns list containing number of matches played by each player
